@@ -127,7 +127,7 @@ public:
         preOrden(raiz);
         cout << endl;
     }
-    
+
     // Funcion para insertar elementos al array, y luego al arbol
     void insertarArbol() {
 
@@ -147,15 +147,15 @@ public:
         Cola<Nodo<T>*> nodosInsertar;
 
         // Insercion de nodos desde el array hacia el arbol
-        for (int i = 0; i <= cantidadNodos; i = i+2) {
-            
+        for (int i = 0; i <= cantidadNodos; i = i + 2) {
+
             if (raiz == nullptr) {
                 // Si raiz null, arbol vacio, entonces se inserta valor 0 (de vectorDatos) en raiz
                 raiz = new Nodo<T>(vectorDatos[i]);
 
                 // Se inserta raiz a la cola de nodos a los que hay que insertar hijos
                 nodosInsertar.enqueue(raiz);
-			}
+            }
             else {
 
                 // Raiz no null, entonces se insertan los hijos al proximo nodo en cola nodosInsertar
@@ -167,9 +167,9 @@ public:
                 // Verifica si ya se insertaron todos los nodos (ultimo nodo tiene 1 hijo si cantidadNodos es par. Con el if, se evita dar un valor no existente como hijo derecho)
                 if (i == cantidadNodos) {
                     break;
-                } 
+                }
                 temp->derecha = new Nodo<T>(vectorDatos[i]);
-                
+
                 // Se insertan los hijos del nodo temp a la cola nodosInsertar, para que se les inserten hijos en la siguiente iteracion
                 nodosInsertar.enqueue(temp->izquierda);
                 nodosInsertar.enqueue(temp->derecha);
@@ -320,40 +320,40 @@ public:
             cout << "3. Salir " << endl;
             cout << "Ingrese opcion deseada: ";
             cin >> opcion;
-            
+
             while (cin.fail()) {
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				cout << "Ingrese un numero: ";
-				cin >> opcion;
-			}
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Ingrese un numero: ";
+                cin >> opcion;
+            }
             //Variables case 1
             int numero;
             switch (opcion) {
-                case 1:
-                    cout << "Cuantos elementos desea ingresar: ";
-                    cin >> cantidad;
-                    for (int i = 0; i < cantidad; i++) {
-                        cout << "ingresar el valor " << i + 1 << endl;
-                        cin >> numero;
-                        insert(numero);
-                    }
-                    break;
-                case 2:
-                    cout << "Arbol In-Order:  " << endl;
-                    inOrder();
-                    cout << "Arbol Pre-Order: " << endl;
-                    preOrder();
-                    cout << "Arbol Post-Order: " << endl;
-                    postOrder();
-                    break;
-                case 3:
-                    opcion = 3;
-                    break;
-                default:
-                    cout << "Opcion no valida " << endl;
-                    break;
-            }            
+            case 1:
+                cout << "Cuantos elementos desea ingresar: ";
+                cin >> cantidad;
+                for (int i = 0; i < cantidad; i++) {
+                    cout << "ingresar el valor " << i + 1 << endl;
+                    cin >> numero;
+                    insert(numero);
+                }
+                break;
+            case 2:
+                cout << "Arbol In-Order:  " << endl;
+                inOrder();
+                cout << "Arbol Pre-Order: " << endl;
+                preOrder();
+                cout << "Arbol Post-Order: " << endl;
+                postOrder();
+                break;
+            case 3:
+                opcion = 3;
+                break;
+            default:
+                cout << "Opcion no valida " << endl;
+                break;
+            }
         }
     }
 
@@ -439,7 +439,7 @@ private:
         // Si el valor es igual al valor del nodo, se retorna el nodo
         else
             return nodo;
-        
+
         // Se actuliza la altura del arbol 
         nodo->altura = 1 + std::max(obtenerAltura(nodo->izquierda), obtenerAltura(nodo->derecha));
 
@@ -524,35 +524,35 @@ public:
     }
 
     // Funcion menu del arbol AVL
-    void menuArbolAVL(){
-        int selector = 0, cantidad = 0, dato=0;
+    void menuArbolAVL() {
+        int selector = 0, cantidad = 0, dato = 0;
         while (selector != 3) {
             cout << "1. insertar datos" << endl;
             cout << "2. mostrar arbol" << endl;
             cout << "3. Para salir" << endl;
-            cin >>selector;
+            cin >> selector;
 
-			// Manejo de errores select
-			while (cin.fail())
-			{
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
-				cout << "Ingrese una opcion valida: ";
-				cin >> selector;
-			}
+            // Manejo de errores select
+            while (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                cout << "Ingrese una opcion valida: ";
+                cin >> selector;
+            }
 
-            switch(selector){
+            switch (selector) {
             case 1:
-                {
-                    cout << "cuantos nodos desea ingresar" << endl;
-                    cin >> cantidad;
-                    for (int i = 0; i <= cantidad; i++) {
-                        cout << "ingrese un dato" << endl;
-                        cin >> dato;
-                        insertar(dato);
-                    }
+            {
+                cout << "cuantos nodos desea ingresar" << endl;
+                cin >> cantidad;
+                for (int i = 0; i <= cantidad; i++) {
+                    cout << "ingrese un dato" << endl;
+                    cin >> dato;
+                    insertar(dato);
                 }
-                break;
+            }
+            break;
             case 2:
             {
                 cout << "Arbol In-Order: " << endl;
@@ -562,12 +562,12 @@ public:
                 cout << "Arbol Pre-Order" << endl;
                 mostrarPreOrden();
             }
-                break;
+            break;
             case 3:
-                {
+            {
                 selector = 3;
-                }
-                break;
+            }
+            break;
             }
 
         }
@@ -581,60 +581,65 @@ enum Color { ROJO, NEGRO };
 template <typename T>
 class NodoRN {
 public:
-	T clave;
-	Color color;
-	NodoRN* izquierda;
-	NodoRN* derecha;
-	NodoRN* padre;
+    T clave;
+    Color color;
+    NodoRN* izquierda;
+    NodoRN* derecha;
+    NodoRN* padre;
 
-	NodoRN(T clave) : clave(clave), color(ROJO), izquierda(nullptr), derecha(nullptr), padre(nullptr) {}
+    NodoRN(T clave) : clave(clave), color(ROJO), izquierda(nullptr), derecha(nullptr), padre(nullptr) {}
 };
 
 template <typename T>
 class ArbolRojoNegro {
 private:
-	NodoRN<T>* raiz;
+    NodoRN<T>* raiz;
 
-	void rotacionIzquierda(NodoRN<T>* x);
-	void rotacionDerecha(NodoRN<T>* y);
-	void arreglarInsercion(NodoRN<T>* z);
-	void arreglarBorrado(NodoRN<T>* x);
-	void transplantar(NodoRN<T>* u, NodoRN<T>* v);
-	NodoRN<T>* minValorNodo(NodoRN<T>* nodo);
-	void imprimirHelper(NodoRN<T>* nodo, std::string indent, bool ultimo) const;
+	// Funcion para hacer rotacion izquierda
+	void rotacionIzquierda(NodoRN<T>* x) {
+		// Se crea un nuevo nodo y se lo iguala al nodo que esta a la derecha de x
+		NodoRN<T>* y = x->derecha;
+
+		x->derecha = y->izquierda;
+		if (y->izquierda != nullptr) y->izquierda->padre = x;
+		y->padre = x->padre;
+		if (x->padre == nullptr) raiz = y;
+		else if (x == x->padre->izquierda) x->padre->izquierda = y;
+		else x->padre->derecha = y;
+		y->izquierda = x;
+		x->padre = y;
+	}
+    void rotacionDerecha(NodoRN<T>* y);
+    void arreglarInsercion(NodoRN<T>* z);
+    void arreglarBorrado(NodoRN<T>* x);
+    void transplantar(NodoRN<T>* u, NodoRN<T>* v);
+    NodoRN<T>* minValorNodo(NodoRN<T>* nodo);
+    void imprimirHelper(NodoRN<T>* nodo, std::string indent, bool ultimo) const;
 
 public:
-	ArbolRojoNegro() : raiz(nullptr) {}
-	void insertar(const T& clave);
-	void borrar(const T& clave);
-	void inOrden() const;
-	void inOrden(NodoRN<T>* nodo) const;
-	void imprimir() const;
+    ArbolRojoNegro() : raiz(nullptr) {}
+    void insertar(const T& clave);
+    void borrar(const T& clave);
+    void inOrden() const;
+    void inOrden(NodoRN<T>* nodo) const;
+    void imprimir() const;
     void menuARN() const;
 };
-
-// Funcion para hacer rotacion izquierda
-template <typename T>
-void ArbolRojoNegro<T>::rotacionIzquierda(NodoRN<T>* x) {
-	NodoRN<T>* y = x->derecha;
-	x->derecha = y->izquierda;
-	if (y->izquierda != nullptr) y->izquierda->padre = x;
-	y->padre = x->padre;
-	if (x->padre == nullptr) raiz = y;
-	else if (x == x->padre->izquierda) x->padre->izquierda = y;
-	else x->padre->derecha = y;
-	y->izquierda = x;
-	x->padre = y;
-}
 
 // Funcion para hacer rotacion derecha
 template <typename T>
 void ArbolRojoNegro<T>::rotacionDerecha(NodoRN<T>* y) {
+	// Crea el al nodo x y le da el valor del hijo izquierdo de y
 	NodoRN<T>* x = y->izquierda;
+	// Modifica el valor del hijo izquierdo de y con elvalor del hijo derecho de x
 	y->izquierda = x->derecha;
+	// Si el hijo derecho de x existe, elpadre del hijo derecho de x toma el valor de y
 	if (x->derecha != nullptr) x->derecha->padre = y;
+	// El padre de x toma el valor del padre de y
 	x->padre = y->padre;
+	// Si el padre de y existe, la raiz toma el valor de x
 	if (y->padre == nullptr) raiz = x;
+	// Si no si y es igual al padre el hijo derecho de y
 	else if (y == y->padre->derecha) y->padre->derecha = x;
 	else y->padre->izquierda = x;
 	x->derecha = y;
@@ -644,22 +649,36 @@ void ArbolRojoNegro<T>::rotacionDerecha(NodoRN<T>* y) {
 // Funcion para arreglar insercion
 template <typename T>
 void ArbolRojoNegro<T>::arreglarInsercion(NodoRN<T>* z) {
+	// Mientras z padre existe y el color de z padre es rojo 
 	while (z->padre && z->padre->color == ROJO) {
+		// SI z padre es igual al abuelo izquierdo de z 
 		if (z->padre == z->padre->padre->izquierda) {
+			// Se asigna un y que es el abuelo derecho de z
 			NodoRN<T>* y = z->padre->padre->derecha;
+			// Si y existe y su color es rojo 
 			if (y && y->color == ROJO) {
+				// Se asigna como negro al color del padre de z
 				z->padre->color = NEGRO;
+				// Se asigna como negro al color de y 
 				y->color = NEGRO;
+				// Se asigna como rojo al color del aabuelo de z
 				z->padre->padre->color = ROJO;
+				// El abuelo de z pasa a ser z
 				z = z->padre->padre;
 			}
 			else {
+				// Si z es igual al su padre derecho 
 				if (z == z->padre->derecha) {
+					// Se asigna a z a su padre 
 					z = z->padre;
+					// Se produe rotacion izquierda
 					rotacionIzquierda(z);
 				}
+				// Se asigna como negro al color del padre de z
 				z->padre->color = NEGRO;
+				// Se asigna como negro al color del abuelo de z
 				z->padre->padre->color = ROJO;
+				// Se produce rotacion derecha 
 				rotacionDerecha(z->padre->padre);
 			}
 		}
@@ -688,180 +707,180 @@ void ArbolRojoNegro<T>::arreglarInsercion(NodoRN<T>* z) {
 // Funcion para hacer insertar
 template <typename T>
 void ArbolRojoNegro<T>::insertar(const T& clave) {
-	NodoRN<T>* z = new NodoRN<T>(clave);
-	NodoRN<T>* y = nullptr;
-	NodoRN<T>* x = raiz;
+    NodoRN<T>* z = new NodoRN<T>(clave);
+    NodoRN<T>* y = nullptr;
+    NodoRN<T>* x = raiz;
 
-	while (x != nullptr) {
-		y = x;
-		if (z->clave < x->clave) x = x->izquierda;
-		else x = x->derecha;
-	}
+    while (x != nullptr) {
+        y = x;
+        if (z->clave < x->clave) x = x->izquierda;
+        else x = x->derecha;
+    }
 
-	z->padre = y;
-	if (y == nullptr) raiz = z;
-	else if (z->clave < y->clave) y->izquierda = z;
-	else y->derecha = z;
+    z->padre = y;
+    if (y == nullptr) raiz = z;
+    else if (z->clave < y->clave) y->izquierda = z;
+    else y->derecha = z;
 
-	z->color = ROJO;
-	arreglarInsercion(z);
+    z->color = ROJO;
+    arreglarInsercion(z);
 }
 
 template <typename T>
 NodoRN<T>* ArbolRojoNegro<T>::minValorNodo(NodoRN<T>* nodo) {
-	while (nodo->izquierda != nullptr) nodo = nodo->izquierda;
-	return nodo;
+    while (nodo->izquierda != nullptr) nodo = nodo->izquierda;
+    return nodo;
 }
 
 template <typename T>
 void ArbolRojoNegro<T>::transplantar(NodoRN<T>* u, NodoRN<T>* v) {
-	if (u->padre == nullptr) raiz = v;
-	else if (u == u->padre->izquierda) u->padre->izquierda = v;
-	else u->padre->derecha = v;
-	if (v != nullptr) v->padre = u->padre;
+    if (u->padre == nullptr) raiz = v;
+    else if (u == u->padre->izquierda) u->padre->izquierda = v;
+    else u->padre->derecha = v;
+    if (v != nullptr) v->padre = u->padre;
 }
 
 template <typename T>
 void ArbolRojoNegro<T>::arreglarBorrado(NodoRN<T>* x) {
-	while (x != raiz && (!x || x->color == NEGRO)) {
-		if (x == x->padre->izquierda) {
-			NodoRN<T>* w = x->padre->derecha;
-			if (w->color == ROJO) {
-				w->color = NEGRO;
-				x->padre->color = ROJO;
-				rotacionIzquierda(x->padre);
-				w = x->padre->derecha;
-			}
-			if ((!w->izquierda || w->izquierda->color == NEGRO) &&
-				(!w->derecha || w->derecha->color == NEGRO)) {
-				w->color = ROJO;
-				x = x->padre;
-			}
-			else {
-				if (!w->derecha || w->derecha->color == NEGRO) {
-					if (w->izquierda) w->izquierda->color = NEGRO;
-					w->color = ROJO;
-					rotacionDerecha(w);
-					w = x->padre->derecha;
-				}
-				w->color = x->padre->color;
-				x->padre->color = NEGRO;
-				if (w->derecha) w->derecha->color = NEGRO;
-				rotacionIzquierda(x->padre);
-				x = raiz;
-			}
-		}
-		else {
-			NodoRN<T>* w = x->padre->izquierda;
-			if (w->color == ROJO) {
-				w->color = NEGRO;
-				x->padre->color = ROJO;
-				rotacionDerecha(x->padre);
-				w = x->padre->izquierda;
-			}
-			if ((!w->derecha || w->derecha->color == NEGRO) &&
-				(!w->izquierda || w->izquierda->color == NEGRO)) {
-				w->color = ROJO;
-				x = x->padre;
-			}
-			else {
-				if (!w->izquierda || w->izquierda->color == NEGRO) {
-					if (w->derecha) w->derecha->color = NEGRO;
-					w->color = ROJO;
-					rotacionIzquierda(w);
-					w = x->padre->izquierda;
-				}
-				w->color = x->padre->color;
-				x->padre->color = NEGRO;
-				if (w->izquierda) w->izquierda->color = NEGRO;
-				rotacionDerecha(x->padre);
-				x = raiz;
-			}
-		}
-	}
-	if (x) x->color = NEGRO;
+    while (x != raiz && (!x || x->color == NEGRO)) {
+        if (x == x->padre->izquierda) {
+            NodoRN<T>* w = x->padre->derecha;
+            if (w->color == ROJO) {
+                w->color = NEGRO;
+                x->padre->color = ROJO;
+                rotacionIzquierda(x->padre);
+                w = x->padre->derecha;
+            }
+            if ((!w->izquierda || w->izquierda->color == NEGRO) &&
+                (!w->derecha || w->derecha->color == NEGRO)) {
+                w->color = ROJO;
+                x = x->padre;
+            }
+            else {
+                if (!w->derecha || w->derecha->color == NEGRO) {
+                    if (w->izquierda) w->izquierda->color = NEGRO;
+                    w->color = ROJO;
+                    rotacionDerecha(w);
+                    w = x->padre->derecha;
+                }
+                w->color = x->padre->color;
+                x->padre->color = NEGRO;
+                if (w->derecha) w->derecha->color = NEGRO;
+                rotacionIzquierda(x->padre);
+                x = raiz;
+            }
+        }
+        else {
+            NodoRN<T>* w = x->padre->izquierda;
+            if (w->color == ROJO) {
+                w->color = NEGRO;
+                x->padre->color = ROJO;
+                rotacionDerecha(x->padre);
+                w = x->padre->izquierda;
+            }
+            if ((!w->derecha || w->derecha->color == NEGRO) &&
+                (!w->izquierda || w->izquierda->color == NEGRO)) {
+                w->color = ROJO;
+                x = x->padre;
+            }
+            else {
+                if (!w->izquierda || w->izquierda->color == NEGRO) {
+                    if (w->derecha) w->derecha->color = NEGRO;
+                    w->color = ROJO;
+                    rotacionIzquierda(w);
+                    w = x->padre->izquierda;
+                }
+                w->color = x->padre->color;
+                x->padre->color = NEGRO;
+                if (w->izquierda) w->izquierda->color = NEGRO;
+                rotacionDerecha(x->padre);
+                x = raiz;
+            }
+        }
+    }
+    if (x) x->color = NEGRO;
 }
 
 template <typename T>
 void ArbolRojoNegro<T>::borrar(const T& clave) {
-	NodoRN<T>* z = raiz;
-	while (z != nullptr && z->clave != clave) {
-		if (clave < z->clave) z = z->izquierda;
-		else z = z->derecha;
-	}
+    NodoRN<T>* z = raiz;
+    while (z != nullptr && z->clave != clave) {
+        if (clave < z->clave) z = z->izquierda;
+        else z = z->derecha;
+    }
 
-	if (z == nullptr) return;
+    if (z == nullptr) return;
 
-	NodoRN<T>* y = z;
-	NodoRN<T>* x = nullptr;
-	Color yOriginalColor = y->color;
+    NodoRN<T>* y = z;
+    NodoRN<T>* x = nullptr;
+    Color yOriginalColor = y->color;
 
-	if (z->izquierda == nullptr) {
-		x = z->derecha;
-		transplantar(z, z->derecha);
-	}
-	else if (z->derecha == nullptr) {
-		x = z->izquierda;
-		transplantar(z, z->izquierda);
-	}
-	else {
-		y = minValorNodo(z->derecha);
-		yOriginalColor = y->color;
-		x = y->derecha;
-		if (y->padre != z) {
-			transplantar(y, y->derecha);
-			y->derecha = z->derecha;
-			y->derecha->padre = y;
-		}
-		transplantar(z, y);
-		y->izquierda = z->izquierda;
-		y->izquierda->padre = y;
-		y->color = z->color;
-	}
+    if (z->izquierda == nullptr) {
+        x = z->derecha;
+        transplantar(z, z->derecha);
+    }
+    else if (z->derecha == nullptr) {
+        x = z->izquierda;
+        transplantar(z, z->izquierda);
+    }
+    else {
+        y = minValorNodo(z->derecha);
+        yOriginalColor = y->color;
+        x = y->derecha;
+        if (y->padre != z) {
+            transplantar(y, y->derecha);
+            y->derecha = z->derecha;
+            y->derecha->padre = y;
+        }
+        transplantar(z, y);
+        y->izquierda = z->izquierda;
+        y->izquierda->padre = y;
+        y->color = z->color;
+    }
 
-	delete z;
+    delete z;
 
-	if (yOriginalColor == NEGRO) arreglarBorrado(x);
+    if (yOriginalColor == NEGRO) arreglarBorrado(x);
 }
 
 template <typename T>
 void ArbolRojoNegro<T>::inOrden() const {
-	inOrden(raiz);
-	cout << endl;
+    inOrden(raiz);
+    cout << endl;
 }
 
 template <typename T>
 void ArbolRojoNegro<T>::inOrden(NodoRN<T>* nodo) const {
-	if (nodo != nullptr) {
-		inOrden(nodo->izquierda);
-		cout << nodo->clave << " ";
-		inOrden(nodo->derecha);
-	}
+    if (nodo != nullptr) {
+        inOrden(nodo->izquierda);
+        cout << nodo->clave << " ";
+        inOrden(nodo->derecha);
+    }
 }
 
 template <typename T>
 void ArbolRojoNegro<T>::imprimir() const {
-	if (raiz) imprimirHelper(raiz, "", true);
+    if (raiz) imprimirHelper(raiz, "", true);
 }
 
 template <typename T>
 void ArbolRojoNegro<T>::imprimirHelper(NodoRN<T>* nodo, std::string indent, bool ultimo) const {
-	if (nodo != nullptr) {
-		cout << indent;
-		if (ultimo) {
-			cout << "R----";
-			indent += "   ";
-		}
-		else {
-			cout << "L----";
-			indent += "|  ";
-		}
+    if (nodo != nullptr) {
+        cout << indent;
+        if (ultimo) {
+            cout << "R----";
+            indent += "   ";
+        }
+        else {
+            cout << "L----";
+            indent += "|  ";
+        }
 
-		string sColor = (nodo->color == ROJO) ? "\033[31mROJO\033[0m" : "NEGRO";  // \033[31m para rojo, \033[0m para resetear
-		cout << nodo->clave << "(" << sColor << ")" << std::endl;
-		imprimirHelper(nodo->izquierda, indent, false);
-		imprimirHelper(nodo->derecha, indent, true);
-	}
+        string sColor = (nodo->color == ROJO) ? "\033[31mROJO\033[0m" : "NEGRO";  // \033[31m para rojo, \033[0m para resetear
+        cout << nodo->clave << "(" << sColor << ")" << std::endl;
+        imprimirHelper(nodo->izquierda, indent, false);
+        imprimirHelper(nodo->derecha, indent, true);
+    }
 }
 
 int main() {
@@ -873,7 +892,7 @@ int main() {
 
     // Variables para menu ARN
     int selector = 0, cantidad = 0, dato = 0;
-    
+
     // Menu de opciones 
     int select = 0;
     while (select != 5) {
@@ -942,16 +961,16 @@ int main() {
                     arbolRN.inOrden();
                 }
                 break;
-                case 3: 
-					cout << "Ingrese el nodo que desea eliminar (solo se pueden eliminar las hojas): ";
-					cin >> dato;
-					arbolRN.borrar(dato);
-                break;
+                case 3:
+                    cout << "Ingrese el nodo que desea eliminar (solo se pueden eliminar las hojas): ";
+                    cin >> dato;
+                    arbolRN.borrar(dato);
+                    break;
                 case 4:
                     return 0;
                 default:
                     cout << "Opcion no valida" << endl;
-					break;
+                    break;
                 }
             }
 
