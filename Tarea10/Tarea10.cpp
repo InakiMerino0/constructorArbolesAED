@@ -16,7 +16,7 @@ private:
     };
 
     Nodo* frente; // Puntero al primer nodo de la cola
-    Nodo* final;  // Puntero al �ltimo nodo de la cola
+    Nodo* final;  // Puntero al ultimo nodo de la cola
 
 public:
     // Constructor de la cola
@@ -68,7 +68,7 @@ public:
     }
 };
 
-// Se crea clase Nodo para crear los nodos del arbol AVL
+// Se crea clase Nodo para crear los nodos del arbol 
 template<typename T>
 class Nodo {
 public:
@@ -220,8 +220,7 @@ public:
     }
 };
 
-
-// Definicion de la clase BinaryTree para representar el arbol binario
+// Definicion de la clase ArbolBB para representar el arbol binario de busqueda
 template<typename T>
 class ArbolBB {
 private:
@@ -440,8 +439,7 @@ private:
         // Si el valor es igual al valor del nodo, se retorna el nodo
         else
             return nodo;
-
-
+        
         // Se actuliza la altura del arbol 
         nodo->altura = 1 + std::max(obtenerAltura(nodo->izquierda), obtenerAltura(nodo->derecha));
 
@@ -519,12 +517,13 @@ public:
         cout << endl;
     }
 
-    //funcion para mostrar pre-order
+    // Funcion para mostrar pre-order
     void mostrarPreOrden() {
         preOrden(raiz);
         cout << endl;
     }
 
+    // Funcion menu del arbol AVL
     void menuArbolAVL(){
         int selector = 0, cantidad = 0, dato=0;
         while (selector != 3) {
@@ -578,7 +577,7 @@ public:
 
 enum Color { ROJO, NEGRO };
 
-// Se crea clase NoRN
+// Se crea clase NodoRN para ARN
 template <typename T>
 class NodoRN {
 public:
@@ -865,18 +864,17 @@ void ArbolRojoNegro<T>::imprimirHelper(NodoRN<T>* nodo, std::string indent, bool
 	}
 }
 
-template<typename T>
-
-void ArbolRojoNegro<T>::menuARN() const{
-    int seleccion = 0, cantidad = 0;
-}
 int main() {
     ArbolAVL<int> arbolVL;
     ArbolBB<int> arbolBB;
     ArbolB<int> arbolB;
+    ArbolRojoNegro<int> arbolRN;
     //ArbolARN<int> arbolRN;
 
-    //Menu de opciones 
+    // Variables para menu ARN
+    int selector = 0, cantidad = 0, dato = 0;
+    
+    // Menu de opciones 
     int select = 0;
     while (select != 5) {
         cout << "Ingrese: " << endl;
@@ -907,7 +905,56 @@ int main() {
             arbolVL.menuArbolAVL();
             break;
         case 4:
-            // Nao tem menu
+            // Menu de arbol ARN
+            while (selector != 3) {
+                cout << "1. Crear arbol e insertar nodos" << endl;
+                cout << "2. Mostrar arbol" << endl;
+                cout << "3. Eliminar un nodo" << endl;
+                cout << "4. Salir al menu principal" << endl;
+                cin >> selector;
+
+                // Manejo de errores select
+                while (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                    cout << "Ingrese una opcion valida: ";
+                    cin >> selector;
+                }
+
+                switch (selector) {
+                case 1:
+                {
+                    cout << "Cuantos nodos desea ingresar" << endl;
+                    cin >> cantidad;
+                    for (int i = 0; i < cantidad; i++) {
+                        cout << "ingrese un dato" << endl;
+                        cin >> dato;
+                        arbolRN.insertar(dato);
+                    }
+                }
+                break;
+                case 2:
+                {
+                    cout << "El arbol final es: " << endl;
+                    arbolRN.imprimir();
+                    cout << endl << "In-Order: " << endl;
+                    arbolRN.inOrden();
+                }
+                break;
+                case 3: 
+					cout << "Ingrese el nodo que desea eliminar (solo se pueden eliminar las hojas): ";
+					cin >> dato;
+					arbolRN.borrar(dato);
+                break;
+                case 4:
+                    return 0;
+                default:
+                    cout << "Opcion no valida" << endl;
+					break;
+                }
+            }
+
             break;
         case 5:
             return 0;
