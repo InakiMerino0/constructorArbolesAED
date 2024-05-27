@@ -212,7 +212,10 @@ public:
             case 3:
                 return;
             default:
-                cout << "Opcion ingresada no valida" << endl;
+                cout << "Ingrese una opcion valida" << endl;
+                system("pause");
+                system("cls");
+                break;
             }
         }
     }
@@ -289,20 +292,17 @@ public:
     }
 
     // Funciones publicas para mostrar los recorridos del arbol
-    void preOrder() {
-        cout << "Pre-order: ";
+    void mostrarPreOrden() {
         preOrderTraversal(raiz);
         cout << endl;
     }
 
-    void inOrder() {
-        cout << "In-order: ";
+    void mostrarInOrden() {
         inOrderTraversal(raiz);
         cout << endl;
     }
 
-    void postOrder() {
-        cout << "Post-order: ";
+    void mostrarPostOrden() {
         postOrderTraversal(raiz);
         cout << endl;
     }
@@ -337,15 +337,20 @@ public:
                 break;
             case 2:
                 cout << "El arbol final es: " << endl;
-                inOrder();
-                preOrder();
-                postOrder();
+                cout << "Arbol in-order:" << endl;
+                mostrarInOrden();
+                cout << "Arbol post-order:" << endl;
+                mostrarPostOrden();
+                cout << "Arbol pre-order:" << endl;
+                mostrarPreOrden();
                 break;
             case 3:
                 opcion = 3;
                 break;
             default:
-                cout << "Opcion no valida " << endl;
+                cout << "Ingrese una opcion valida" << endl;
+                system("pause");
+                system("cls");
                 break;
             }
         }
@@ -549,8 +554,12 @@ public:
             break;
             case 2:
             {
+                cout << "El arbol final es: " << endl;
+                cout << "Arbol in-order:" << endl;
                 mostrarInOrden();
+                cout << "Arbol post-order:" << endl;
                 mostrarPostOrden();
+                cout << "Arbol pre-order:" << endl;
                 mostrarPreOrden();
             }
             break;
@@ -559,6 +568,9 @@ public:
                 selector = 3;
             }
             break;
+            default:
+                cout << "Ingrese una opcion valida: " << endl;
+                break;
             }
 
         }
@@ -586,27 +598,27 @@ class ArbolRojoNegro {
 private:
     NodoRN<T>* raiz;
 
-	// Funcion para hacer rotacion izquierda
-	void rotacionIzquierda(NodoRN<T>* x) {
-		// Se crea un nuevo nodo y se lo iguala al nodo que esta a la derecha de x
-		NodoRN<T>* y = x->derecha;
+    // Funcion para hacer rotacion izquierda
+    void rotacionIzquierda(NodoRN<T>* x) {
+        // Se crea un nuevo nodo y se lo iguala al nodo que esta a la derecha de x
+        NodoRN<T>* y = x->derecha;
         //Le asigna al nodo a la derecha de x el valor del nodo a la izquierda de y
-		x->derecha = y->izquierda;
+        x->derecha = y->izquierda;
         //Si el nodo que esta a la izquierda de y es nulo, le asigana al padre del nodo izqueirdo de y el valor de x
-		if (y->izquierda != nullptr) y->izquierda->padre = x;
+        if (y->izquierda != nullptr) y->izquierda->padre = x;
         // Le asigna al padre de y el valor del padre de x        
-        y->padre = x->padre;	
+        y->padre = x->padre;
         //Si el padre de x es nulo le asigna al puntero raiz el valor de y
         if (x->padre == nullptr) raiz = y;
         // Si el padre de x no es nulo pero x es igual al padre a la izquerda de x, le asigna al padre a la izquierda de x el valor de y
         else if (x == x->padre->izquierda) x->padre->izquierda = y;
         // si no se cumplen las condiciones anteriores, le da el valor de y al padre a la drecha de x
-		else x->padre->derecha = y;
+        else x->padre->derecha = y;
         // Iguala el puntero izquierda de y a x
-		y->izquierda = x;
+        y->izquierda = x;
         // Iguala el padre de x a y
-		x->padre = y;
-	}
+        x->padre = y;
+    }
     void rotacionDerecha(NodoRN<T>* y);
     void arreglarInsercion(NodoRN<T>* z);
     void arreglarBorrado(NodoRN<T>* x);
@@ -627,94 +639,94 @@ public:
 // Funcion para hacer rotacion derecha
 template <typename T>
 void ArbolRojoNegro<T>::rotacionDerecha(NodoRN<T>* y) {
-	// Crea el al nodo x y le da el valor del hijo izquierdo de y
-	NodoRN<T>* x = y->izquierda;
-	// Modifica el valor del hijo izquierdo de y con elvalor del hijo derecho de x
-	y->izquierda = x->derecha;
-	// Si el hijo derecho de x existe, elpadre del hijo derecho de x toma el valor de y
-	if (x->derecha != nullptr) x->derecha->padre = y;
-	// El padre de x toma el valor del padre de y
-	x->padre = y->padre;
-	// Si el padre de y existe, la raiz toma el valor de x
-	if (y->padre == nullptr) raiz = x;
-	// Si no si y es igual al padre el hijo derecho de y entonces el hijo derecho del padre de y toma el valor de x
-	else if (y == y->padre->derecha) y->padre->derecha = x;
+    // Crea el al nodo x y le da el valor del hijo izquierdo de y
+    NodoRN<T>* x = y->izquierda;
+    // Modifica el valor del hijo izquierdo de y con elvalor del hijo derecho de x
+    y->izquierda = x->derecha;
+    // Si el hijo derecho de x existe, elpadre del hijo derecho de x toma el valor de y
+    if (x->derecha != nullptr) x->derecha->padre = y;
+    // El padre de x toma el valor del padre de y
+    x->padre = y->padre;
+    // Si el padre de y existe, la raiz toma el valor de x
+    if (y->padre == nullptr) raiz = x;
+    // Si no si y es igual al padre el hijo derecho de y entonces el hijo derecho del padre de y toma el valor de x
+    else if (y == y->padre->derecha) y->padre->derecha = x;
     // Sino el hijo izquierdo del padre de y toma el  valor de x
-	else y->padre->izquierda = x;
+    else y->padre->izquierda = x;
     // El hijo derecho de x toma el valor de y
-	x->derecha = y;
+    x->derecha = y;
     // El padre de y toma el valor de x
-	y->padre = x;
+    y->padre = x;
 }
 
 // Funcion para arreglar insercion
 template <typename T>
 void ArbolRojoNegro<T>::arreglarInsercion(NodoRN<T>* z) {
-	// Mientras z padre existe y el color de z padre es rojo 
-	while (z->padre && z->padre->color == ROJO) {
-		// SI z padre es igual al abuelo izquierdo de z 
-		if (z->padre == z->padre->padre->izquierda) {
-			// Se asigna un y que es el abuelo derecho de z
-			NodoRN<T>* y = z->padre->padre->derecha;
-			// Si y existe y su color es rojo 
-			if (y && y->color == ROJO) {
-				// Se asigna como negro al color del padre de z
-				z->padre->color = NEGRO;
-				// Se asigna como negro al color de y 
-				y->color = NEGRO;
-				// Se asigna como rojo al color del aabuelo de z
-				z->padre->padre->color = ROJO;
-				// El abuelo de z pasa a ser z
-				z = z->padre->padre;
-			}
-			else {
-				// Si z es igual al su padre derecho 
-				if (z == z->padre->derecha) {
-					// Se asigna a z a su padre 
-					z = z->padre;
-					// Se produe rotacion izquierda
-					rotacionIzquierda(z);
-				}
-				// Se asigna como negro al color del padre de z
-				z->padre->color = NEGRO;
-				// Se asigna como negro al color del abuelo de z
-				z->padre->padre->color = ROJO;
-				// Se produce rotacion derecha 
-				rotacionDerecha(z->padre->padre);
-			}
-		}
-		else {
+    // Mientras z padre existe y el color de z padre es rojo 
+    while (z->padre && z->padre->color == ROJO) {
+        // SI z padre es igual al abuelo izquierdo de z 
+        if (z->padre == z->padre->padre->izquierda) {
+            // Se asigna un y que es el abuelo derecho de z
+            NodoRN<T>* y = z->padre->padre->derecha;
+            // Si y existe y su color es rojo 
+            if (y && y->color == ROJO) {
+                // Se asigna como negro al color del padre de z
+                z->padre->color = NEGRO;
+                // Se asigna como negro al color de y 
+                y->color = NEGRO;
+                // Se asigna como rojo al color del aabuelo de z
+                z->padre->padre->color = ROJO;
+                // El abuelo de z pasa a ser z
+                z = z->padre->padre;
+            }
+            else {
+                // Si z es igual al su padre derecho 
+                if (z == z->padre->derecha) {
+                    // Se asigna a z a su padre 
+                    z = z->padre;
+                    // Se produe rotacion izquierda
+                    rotacionIzquierda(z);
+                }
+                // Se asigna como negro al color del padre de z
+                z->padre->color = NEGRO;
+                // Se asigna como negro al color del abuelo de z
+                z->padre->padre->color = ROJO;
+                // Se produce rotacion derecha 
+                rotacionDerecha(z->padre->padre);
+            }
+        }
+        else {
             // y es igual al abuelo de izquierdo de z 
-			NodoRN<T>* y = z->padre->padre->izquierda;
+            NodoRN<T>* y = z->padre->padre->izquierda;
             // si y existe y el color de y es rojo
-			if (y && y->color == ROJO) {
+            if (y && y->color == ROJO) {
                 // Se le asigna como color negro al padre de z o
-				z->padre->color = NEGRO;
+                z->padre->color = NEGRO;
                 // Se le asigna como negro al color de y
-				y->color = NEGRO;
+                y->color = NEGRO;
                 // Se le asigno como rojo al color del abuelo de z
-				z->padre->padre->color = ROJO;
+                z->padre->padre->color = ROJO;
                 // Se le asigna a z como el abuelo de z
-				z = z->padre->padre;
-			}
-			else {
+                z = z->padre->padre;
+            }
+            else {
                 // Si z es igual a su padre de izquierda
-				if (z == z->padre->izquierda) {
+                if (z == z->padre->izquierda) {
                     // z es igual a su padre 
-					z = z->padre;
+                    z = z->padre;
                     // Se produce rotacion derecha 
-					rotacionDerecha(z);
-				}
+                    rotacionDerecha(z);
+                }
                 // Se le asigna como negro al color del padre de z 
-				z->padre->color = NEGRO;
+                z->padre->color = NEGRO;
                 // Se le asigna como rojo al color del abuelo de z
-				z->padre->padre->color = ROJO;
+                z->padre->padre->color = ROJO;
                 // Se produce rotacion izquierda
-				rotacionIzquierda(z->padre->padre);
-			}
-		}
-	}
-	raiz->color = NEGRO;
+                rotacionIzquierda(z->padre->padre);
+            }
+        }
+    }
+    raiz->color = NEGRO;
 }
 
 // Funcion para hacer insertar
@@ -815,8 +827,8 @@ void ArbolRojoNegro<T>::imprimirHelper(NodoRN<T>* nodo, string indent, bool ulti
         // Se llama recursivamente tomando como parametros el valor a la izquierda de nodo, ident y ultimo 
         imprimirHelper(nodo->izquierda, indent, false);
         imprimirHelper(nodo->derecha, indent, true);
-    }      
-} 
+    }
+}
 
 int main() {
     ArbolAVL<int> arbolVL;
@@ -898,7 +910,9 @@ int main() {
                 case 3:
                     break;
                 default:
-                    cout << "Opcion no valida" << endl;
+                    cout << "Ingrese una opcion valida" << endl;
+                    system("pause");
+                    system("cls");
                     break;
                 }
             }
@@ -907,7 +921,7 @@ int main() {
         case 5:
             return 0;
         default:
-            cout << "Opcion incorrecta" << endl;
+            cout << "Ingrese una opcion valida" << endl;
             break;
         }
 
