@@ -48,7 +48,7 @@ public:
     // Metodo para eliminar el elemento al frente de la cola
     T dequeue() {
         if (frente == nullptr) {
-            throw std::out_of_range("Intento de dequeue en cola vac�a");
+            throw out_of_range("Intento de dequeue en cola vac�a");
         }
         Nodo* temp = frente;
         T dato = frente->dato;
@@ -176,9 +176,6 @@ public:
 
             }
         }
-
-        mostrarInOrden();
-
         // Liberacion de memoria
         delete[] vectorDatos;
     }
@@ -204,6 +201,7 @@ public:
                 insertarArbol();
                 break;
             case 2:
+                cout << "El arbol final es: " << endl;
                 cout << "Arbol in-order:" << endl;
                 mostrarInOrden();
                 cout << "Arbol post-order" << endl;
@@ -314,37 +312,33 @@ public:
         int opcion = 0, cantidad = 0;
         while (opcion != 3)
         {
-            cout << "Menu de opciones: " << endl;
-            cout << "1. Insertar un elemento " << endl;
-            cout << "2. Mostrar arbol  " << endl;
-            cout << "3. Salir " << endl;
-            cout << "Ingrese opcion deseada: ";
+            cout << "1. Crear un arbol e ingresar nodos" << endl;
+            cout << "2. Mostrar el arbol" << endl;
+            cout << "3. Volver al menu principal" << endl;
             cin >> opcion;
 
             while (cin.fail()) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Ingrese un numero: ";
+                cout << "Ingrese una opcion valida: ";
                 cin >> opcion;
             }
             //Variables case 1
             int numero;
             switch (opcion) {
             case 1:
-                cout << "Cuantos elementos desea ingresar: ";
+                cout << "Ingrese cuantos nodos desea insertar: ";
                 cin >> cantidad;
                 for (int i = 0; i < cantidad; i++) {
-                    cout << "ingresar el valor " << i + 1 << endl;
+                    cout << "Ingrese nodo " << i + 1 << endl;
                     cin >> numero;
                     insert(numero);
                 }
                 break;
             case 2:
-                cout << "Arbol In-Order:  " << endl;
+                cout << "El arbol final es: " << endl;
                 inOrder();
-                cout << "Arbol Pre-Order: " << endl;
                 preOrder();
-                cout << "Arbol Post-Order: " << endl;
                 postOrder();
                 break;
             case 3:
@@ -394,8 +388,8 @@ private:
         y->izquierda = T2;
 
         // Se actualiza la altura de los nodos
-        y->altura = std::max(obtenerAltura(y->izquierda), obtenerAltura(y->derecha)) + 1;
-        x->altura = std::max(obtenerAltura(x->izquierda), obtenerAltura(x->derecha)) + 1;
+        y->altura = max(obtenerAltura(y->izquierda), obtenerAltura(y->derecha)) + 1;
+        x->altura = max(obtenerAltura(x->izquierda), obtenerAltura(x->derecha)) + 1;
 
         return x;
     }
@@ -413,9 +407,9 @@ private:
         x->derecha = T2;
 
         // Actualiza la altura del arbol x
-        x->altura = std::max(obtenerAltura(x->izquierda), obtenerAltura(x->derecha)) + 1;
+        x->altura = max(obtenerAltura(x->izquierda), obtenerAltura(x->derecha)) + 1;
         // Actualiza la altura del arbol y
-        y->altura = std::max(obtenerAltura(y->izquierda), obtenerAltura(y->derecha)) + 1;
+        y->altura = max(obtenerAltura(y->izquierda), obtenerAltura(y->derecha)) + 1;
 
         //devuelve el arbol y
         return y;
@@ -441,7 +435,7 @@ private:
             return nodo;
 
         // Se actuliza la altura del arbol 
-        nodo->altura = 1 + std::max(obtenerAltura(nodo->izquierda), obtenerAltura(nodo->derecha));
+        nodo->altura = 1 + max(obtenerAltura(nodo->izquierda), obtenerAltura(nodo->derecha));
 
 
         // Se crea variable que se le asigna el balance del arbol 
@@ -475,7 +469,7 @@ private:
     void inOrden(Nodo<T>* nodo) {
         if (nodo != nullptr) {
             inOrden(nodo->izquierda);
-            std::cout << nodo->dato << " ";
+            cout << nodo->dato << " ";
             inOrden(nodo->derecha);
         }
     }
@@ -485,14 +479,14 @@ private:
         if (nodo != nullptr) {
             postOrden(nodo->izquierda);
             postOrden(nodo->derecha);
-            std::cout << nodo->dato << " ";
+            cout << nodo->dato << " ";
         }
     }
 
     //Funcion para mostrar los elementos pre-order
     void preOrden(Nodo<T>* nodo) {
         if (nodo != nullptr) {
-            std::cout << nodo->dato << " ";
+            cout << nodo->dato << " ";
             preOrden(nodo->izquierda);
             preOrden(nodo->derecha);
         }
@@ -527,9 +521,9 @@ public:
     void menuArbolAVL() {
         int selector = 0, cantidad = 0, dato = 0;
         while (selector != 3) {
-            cout << "1. insertar datos" << endl;
-            cout << "2. mostrar arbol" << endl;
-            cout << "3. Para salir" << endl;
+            cout << "1. Crear un arbol e ingresar nodos" << endl;
+            cout << "2. Mostrar el arbol" << endl;
+            cout << "3. Volver al menu principal" << endl;
             cin >> selector;
 
             // Manejo de errores select
@@ -544,10 +538,10 @@ public:
             switch (selector) {
             case 1:
             {
-                cout << "cuantos nodos desea ingresar" << endl;
+                cout << "Ingrese cuantos nodos desea insertar: " << endl;
                 cin >> cantidad;
-                for (int i = 0; i <= cantidad; i++) {
-                    cout << "ingrese un dato" << endl;
+                for (int i = 0; i < cantidad; i++) {
+                    cout << "Ingrese nodo " << i + 1 << endl;
                     cin >> dato;
                     insertar(dato);
                 }
@@ -555,11 +549,8 @@ public:
             break;
             case 2:
             {
-                cout << "Arbol In-Order: " << endl;
                 mostrarInOrden();
-                cout << "Arbol Post-Order" << endl;
                 mostrarPostOrden();
-                cout << "Arbol Pre-Order" << endl;
                 mostrarPreOrden();
             }
             break;
@@ -599,14 +590,21 @@ private:
 	void rotacionIzquierda(NodoRN<T>* x) {
 		// Se crea un nuevo nodo y se lo iguala al nodo que esta a la derecha de x
 		NodoRN<T>* y = x->derecha;
-
+        //Le asigna al nodo a la derecha de x el valor del nodo a la izquierda de y
 		x->derecha = y->izquierda;
+        //Si el nodo que esta a la izquierda de y es nulo, le asigana al padre del nodo izqueirdo de y el valor de x
 		if (y->izquierda != nullptr) y->izquierda->padre = x;
-		y->padre = x->padre;
-		if (x->padre == nullptr) raiz = y;
-		else if (x == x->padre->izquierda) x->padre->izquierda = y;
+        // Le asigna al padre de y el valor del padre de x        
+        y->padre = x->padre;	
+        //Si el padre de x es nulo le asigna al puntero raiz el valor de y
+        if (x->padre == nullptr) raiz = y;
+        // Si el padre de x no es nulo pero x es igual al padre a la izquerda de x, le asigna al padre a la izquierda de x el valor de y
+        else if (x == x->padre->izquierda) x->padre->izquierda = y;
+        // si no se cumplen las condiciones anteriores, le da el valor de y al padre a la drecha de x
 		else x->padre->derecha = y;
+        // Iguala el puntero izquierda de y a x
 		y->izquierda = x;
+        // Iguala el padre de x a y
 		x->padre = y;
 	}
     void rotacionDerecha(NodoRN<T>* y);
@@ -639,10 +637,13 @@ void ArbolRojoNegro<T>::rotacionDerecha(NodoRN<T>* y) {
 	x->padre = y->padre;
 	// Si el padre de y existe, la raiz toma el valor de x
 	if (y->padre == nullptr) raiz = x;
-	// Si no si y es igual al padre el hijo derecho de y
+	// Si no si y es igual al padre el hijo derecho de y entonces el hijo derecho del padre de y toma el valor de x
 	else if (y == y->padre->derecha) y->padre->derecha = x;
+    // Sino el hijo izquierdo del padre de y toma el  valor de x
 	else y->padre->izquierda = x;
+    // El hijo derecho de x toma el valor de y
 	x->derecha = y;
+    // El padre de y toma el valor de x
 	y->padre = x;
 }
 
@@ -683,20 +684,32 @@ void ArbolRojoNegro<T>::arreglarInsercion(NodoRN<T>* z) {
 			}
 		}
 		else {
+            // y es igual al abuelo de izquierdo de z 
 			NodoRN<T>* y = z->padre->padre->izquierda;
+            // si y existe y el color de y es rojo
 			if (y && y->color == ROJO) {
+                // Se le asigna como color negro al padre de z o
 				z->padre->color = NEGRO;
+                // Se le asigna como negro al color de y
 				y->color = NEGRO;
+                // Se le asigno como rojo al color del abuelo de z
 				z->padre->padre->color = ROJO;
+                // Se le asigna a z como el abuelo de z
 				z = z->padre->padre;
 			}
 			else {
+                // Si z es igual a su padre de izquierda
 				if (z == z->padre->izquierda) {
+                    // z es igual a su padre 
 					z = z->padre;
+                    // Se produce rotacion derecha 
 					rotacionDerecha(z);
 				}
+                // Se le asigna como negro al color del padre de z 
 				z->padre->color = NEGRO;
+                // Se le asigna como rojo al color del abuelo de z
 				z->padre->padre->color = ROJO;
+                // Se produce rotacion izquierda
 				rotacionIzquierda(z->padre->padre);
 			}
 		}
@@ -711,14 +724,20 @@ void ArbolRojoNegro<T>::insertar(const T& clave) {
     NodoRN<T>* y = nullptr;
     NodoRN<T>* x = raiz;
 
+    // Recorre el arbol hasta llegar al final
     while (x != nullptr) {
+        // Almacena x en y, para luego reasignar el nodo padre 
         y = x;
+        // Verifica en que posicion debe insertarse el nodo segunr el tamano de clave, luego lo isnerta
         if (z->clave < x->clave) x = x->izquierda;
         else x = x->derecha;
     }
-
+    // z padre es igual a y
+    // se da a z->padre el valor de y, que contiene el valor anterior de x, es decir, el padre de z
     z->padre = y;
+    // Si arbol vacio, entonces z raiz
     if (y == nullptr) raiz = z;
+    // Si no esta vacio, se verifica la clave de z para insertarlo correctamente en y
     else if (z->clave < y->clave) y->izquierda = z;
     else y->derecha = z;
 
@@ -726,162 +745,78 @@ void ArbolRojoNegro<T>::insertar(const T& clave) {
     arreglarInsercion(z);
 }
 
+// Funcion para encontrar el valor de mas nivel de un nodo
 template <typename T>
 NodoRN<T>* ArbolRojoNegro<T>::minValorNodo(NodoRN<T>* nodo) {
+    //Mientras el hijo izquierdo no sea nulo el nodo va a tomar el valor de su hijo
     while (nodo->izquierda != nullptr) nodo = nodo->izquierda;
+    //cuando el hijo izquierdo del nodo ya sea nulo retorna el nodo
     return nodo;
 }
 
+// Funcion para transplantar nodos 
 template <typename T>
 void ArbolRojoNegro<T>::transplantar(NodoRN<T>* u, NodoRN<T>* v) {
+    // Si el padre de u es nullo, raiz es igual a v
     if (u->padre == nullptr) raiz = v;
+    // Si u es igual a u padre izquierda, u padre izquierda es igual a v
     else if (u == u->padre->izquierda) u->padre->izquierda = v;
+    // else, u padre derecha ees igual a v
     else u->padre->derecha = v;
+    // Si v es nulo, v padre y igual a u padre 
     if (v != nullptr) v->padre = u->padre;
 }
 
-template <typename T>
-void ArbolRojoNegro<T>::arreglarBorrado(NodoRN<T>* x) {
-    while (x != raiz && (!x || x->color == NEGRO)) {
-        if (x == x->padre->izquierda) {
-            NodoRN<T>* w = x->padre->derecha;
-            if (w->color == ROJO) {
-                w->color = NEGRO;
-                x->padre->color = ROJO;
-                rotacionIzquierda(x->padre);
-                w = x->padre->derecha;
-            }
-            if ((!w->izquierda || w->izquierda->color == NEGRO) &&
-                (!w->derecha || w->derecha->color == NEGRO)) {
-                w->color = ROJO;
-                x = x->padre;
-            }
-            else {
-                if (!w->derecha || w->derecha->color == NEGRO) {
-                    if (w->izquierda) w->izquierda->color = NEGRO;
-                    w->color = ROJO;
-                    rotacionDerecha(w);
-                    w = x->padre->derecha;
-                }
-                w->color = x->padre->color;
-                x->padre->color = NEGRO;
-                if (w->derecha) w->derecha->color = NEGRO;
-                rotacionIzquierda(x->padre);
-                x = raiz;
-            }
-        }
-        else {
-            NodoRN<T>* w = x->padre->izquierda;
-            if (w->color == ROJO) {
-                w->color = NEGRO;
-                x->padre->color = ROJO;
-                rotacionDerecha(x->padre);
-                w = x->padre->izquierda;
-            }
-            if ((!w->derecha || w->derecha->color == NEGRO) &&
-                (!w->izquierda || w->izquierda->color == NEGRO)) {
-                w->color = ROJO;
-                x = x->padre;
-            }
-            else {
-                if (!w->izquierda || w->izquierda->color == NEGRO) {
-                    if (w->derecha) w->derecha->color = NEGRO;
-                    w->color = ROJO;
-                    rotacionIzquierda(w);
-                    w = x->padre->izquierda;
-                }
-                w->color = x->padre->color;
-                x->padre->color = NEGRO;
-                if (w->izquierda) w->izquierda->color = NEGRO;
-                rotacionDerecha(x->padre);
-                x = raiz;
-            }
-        }
-    }
-    if (x) x->color = NEGRO;
-}
-
-template <typename T>
-void ArbolRojoNegro<T>::borrar(const T& clave) {
-    NodoRN<T>* z = raiz;
-    while (z != nullptr && z->clave != clave) {
-        if (clave < z->clave) z = z->izquierda;
-        else z = z->derecha;
-    }
-
-    if (z == nullptr) return;
-
-    NodoRN<T>* y = z;
-    NodoRN<T>* x = nullptr;
-    Color yOriginalColor = y->color;
-
-    if (z->izquierda == nullptr) {
-        x = z->derecha;
-        transplantar(z, z->derecha);
-    }
-    else if (z->derecha == nullptr) {
-        x = z->izquierda;
-        transplantar(z, z->izquierda);
-    }
-    else {
-        y = minValorNodo(z->derecha);
-        yOriginalColor = y->color;
-        x = y->derecha;
-        if (y->padre != z) {
-            transplantar(y, y->derecha);
-            y->derecha = z->derecha;
-            y->derecha->padre = y;
-        }
-        transplantar(z, y);
-        y->izquierda = z->izquierda;
-        y->izquierda->padre = y;
-        y->color = z->color;
-    }
-
-    delete z;
-
-    if (yOriginalColor == NEGRO) arreglarBorrado(x);
-}
-
+// Funcion para hacer recorrido inOrder// Funcion para mostrar los valorres 
 template <typename T>
 void ArbolRojoNegro<T>::inOrden() const {
     inOrden(raiz);
     cout << endl;
 }
 
+// Funcion para imprimir los elementos in-order 
 template <typename T>
 void ArbolRojoNegro<T>::inOrden(NodoRN<T>* nodo) const {
+    // Si nodo es distinto de nulo
     if (nodo != nullptr) {
+        // Funcion in-order nodo izquierdo
         inOrden(nodo->izquierda);
         cout << nodo->clave << " ";
+        // Funcion in-order nodo derecha
         inOrden(nodo->derecha);
     }
 }
 
+// Funcion para imprimir los elementos 
 template <typename T>
 void ArbolRojoNegro<T>::imprimir() const {
     if (raiz) imprimirHelper(raiz, "", true);
 }
 
 template <typename T>
-void ArbolRojoNegro<T>::imprimirHelper(NodoRN<T>* nodo, std::string indent, bool ultimo) const {
+void ArbolRojoNegro<T>::imprimirHelper(NodoRN<T>* nodo, string indent, bool ultimo) const {
+    // Si nodo es distinto de nulo    // Si ultimo es true, muestra R---- y concatena dos espacios a indent
     if (nodo != nullptr) {
         cout << indent;
+
         if (ultimo) {
             cout << "R----";
             indent += "   ";
         }
+        // Si no se cumple la condicion anterior muestra L---- y le concatena | y dos espacios a indent
         else {
             cout << "L----";
             indent += "|  ";
         }
-
+        // Creacion de una variable string que es iguala al color de nodo, el cual es rojo, si "\033[31mROJO\033[0m" : "NEGRO"
         string sColor = (nodo->color == ROJO) ? "\033[31mROJO\033[0m" : "NEGRO";  // \033[31m para rojo, \033[0m para resetear
+        // muestra el dato sumado al color almacenado en la variable sColor
         cout << nodo->clave << "(" << sColor << ")" << std::endl;
+        // Se llama recursivamente tomando como parametros el valor a la izquierda de nodo, ident y ultimo 
         imprimirHelper(nodo->izquierda, indent, false);
         imprimirHelper(nodo->derecha, indent, true);
-    }
-}
+    }      
+} 
 
 int main() {
     ArbolAVL<int> arbolVL;
@@ -926,10 +861,9 @@ int main() {
         case 4:
             // Menu de arbol ARN
             while (selector != 3) {
-                cout << "1. Crear arbol e insertar nodos" << endl;
-                cout << "2. Mostrar arbol" << endl;
-                cout << "3. Eliminar un nodo" << endl;
-                cout << "4. Salir al menu principal" << endl;
+                cout << "1. Crear un arbol e ingresar nodos" << endl;
+                cout << "2. Mostrar el arbol" << endl;
+                cout << "3. Volver al menu principal" << endl;
                 cin >> selector;
 
                 // Manejo de errores select
@@ -944,10 +878,10 @@ int main() {
                 switch (selector) {
                 case 1:
                 {
-                    cout << "Cuantos nodos desea ingresar" << endl;
+                    cout << "Ingrese cuantos nodos desea insertar: " << endl;
                     cin >> cantidad;
                     for (int i = 0; i < cantidad; i++) {
-                        cout << "ingrese un dato" << endl;
+                        cout << "Ingrese nodo " << i + 1 << endl;
                         cin >> dato;
                         arbolRN.insertar(dato);
                     }
@@ -962,12 +896,7 @@ int main() {
                 }
                 break;
                 case 3:
-                    cout << "Ingrese el nodo que desea eliminar (solo se pueden eliminar las hojas): ";
-                    cin >> dato;
-                    arbolRN.borrar(dato);
                     break;
-                case 4:
-                    return 0;
                 default:
                     cout << "Opcion no valida" << endl;
                     break;
