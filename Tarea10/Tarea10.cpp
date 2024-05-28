@@ -84,6 +84,8 @@ class ArbolB {
 private:
 
     Nodo<T>* raiz;
+    bool existeArbol = false;
+    int eliminarArbol = 0;
 
     // Funcion para mostrar los elementos de un arbol en orden
     void inOrden(Nodo<T>* nodo) {
@@ -176,6 +178,7 @@ public:
 
             }
         }
+        existeArbol = true;
         // Liberacion de memoria
         delete[] vectorDatos;
     }
@@ -184,11 +187,12 @@ public:
     void menuBinarios() {
         int select = 0;
         while (select != 5) {
-            cout << "1. Crear un arbol binario e ingresar nodos" << endl;
-            cout << "2. Mostrar el arbol binario" << endl;
+            cout << "1. Crear un arbol binario e ingresar nodos (una vez por ejecucion)" << endl;
+            cout << "2. Mostrar el arbol binario (solo si ya se ha creado el arbol)" << endl;
             cout << "3. Volver al menu principal" << endl;
             cin >> select;
 
+            // Verificacion de tipo de dato ingresado
             while (cin.fail()) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
@@ -198,16 +202,52 @@ public:
 
             switch (select) {
             case 1:
-                insertarArbol();
+                if (!existeArbol) {
+                    insertarArbol();
+				}
+                else {
+                    // Logica de eliminar arbol, si existe un arbol ya creado
+					cout << "Ya se ha creado un arbol binario. " << endl;
+                    cout << ". Ingrese 1 si desea eliminar el arbol existente" << endl;
+                    cout << ". Presione otro numero para continuar..." << endl;
+                    cin >> eliminarArbol;
+
+                    // Verificacion de tipo de dato ingresado
+                    while (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                        cout << "Ingrese un numero: ";
+                        cin >> eliminarArbol;
+                    }
+
+                    // Se elimina el arbol existente si el usuario ingresa 1
+                    if (eliminarArbol == 1) {
+						delete raiz;
+						raiz = nullptr;
+						existeArbol = false;
+                    }
+                    else {
+                        system("cls");
+                    }
+                }
                 break;
             case 2:
-                cout << "El arbol final es: " << endl;
-                cout << "Arbol in-order:" << endl;
-                mostrarInOrden();
-                cout << "Arbol post-order" << endl;
-                mostrarPostOrder();
-                cout << "Arbol pre-order" << endl;
-                mostrarPreOrder();
+                if (existeArbol) {
+                    cout << "El arbol final es: " << endl;
+                    cout << "Arbol in-order:" << endl;
+                    mostrarInOrden();
+                    cout << "Arbol post-order" << endl;
+                    mostrarPostOrder();
+                    cout << "Arbol pre-order" << endl;
+                    mostrarPreOrder();
+                    system("pause");
+                    system("cls");
+				}
+				else {
+					cout << "Primero debe crear un arbol binario" << endl;
+                    system("pause");
+                    system("cls");
+                }
                 break;
             case 3:
                 return;
@@ -226,6 +266,8 @@ template<typename T>
 class ArbolBB {
 private:
     Nodo<T>* raiz; // Puntero a la raiz del arbol
+    bool existeArbol = false;
+    int eliminarArbol = 0;
 
     // Funcion privada para destruir el arbol recursivamente
     void destroyTree(Nodo<T>* nodo) {
@@ -309,43 +351,78 @@ public:
 
     void menuBB()
     {
-        int opcion = 0, cantidad = 0;
-        while (opcion != 3)
+        int select = 0, cantidad = 0;
+        while (select != 3)
         {
-            cout << "1. Crear un arbol e ingresar nodos" << endl;
+            cout << "1. Crear un arbol binario de busqueda e ingresar nodos" << endl;
             cout << "2. Mostrar el arbol" << endl;
             cout << "3. Volver al menu principal" << endl;
-            cin >> opcion;
+            cin >> select;
 
             while (cin.fail()) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Ingrese una opcion valida: ";
-                cin >> opcion;
+                cin >> select;
             }
             //Variables case 1
-            int numero;
-            switch (opcion) {
+            int numero = 0;
+            switch (select) {
             case 1:
-                cout << "Ingrese cuantos nodos desea insertar: ";
-                cin >> cantidad;
-                for (int i = 0; i < cantidad; i++) {
-                    cout << "Ingrese nodo " << i + 1 << endl;
-                    cin >> numero;
-                    insert(numero);
+                if (!existeArbol) {
+                    cout << "Ingrese cuantos nodos desea insertar: ";
+                    cin >> cantidad;
+                    for (int i = 0; i < cantidad; i++) {
+                        cout << "Ingrese nodo " << i + 1 << endl;
+                        cin >> numero;
+                        insert(numero);
+                    }
+                    existeArbol = true;
+                }
+                else {
+                    // Logica de eliminar arbol, si existe un arbol ya creado
+                    cout << "Ya se ha creado un arbol binario. " << endl;
+                    cout << ". Ingrese 1 si desea eliminar el arbol existente" << endl;
+                    cout << ". Presione otro numero para continuar..." << endl;
+                    cin >> eliminarArbol;
+
+                    // Verificacion de tipo de dato ingresado
+                    while (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                        cout << "Ingrese un numero: ";
+                        cin >> eliminarArbol;
+                    }
+
+                    // Se elimina el arbol existente si el usuario ingresa 1
+                    if (eliminarArbol == 1) {
+                        delete raiz;
+                        raiz = nullptr;
+                        existeArbol = false;
+                    }
+                    else {
+                        system("cls");
+                    }
                 }
                 break;
             case 2:
-                cout << "El arbol final es: " << endl;
-                cout << "Arbol in-order:" << endl;
-                mostrarInOrden();
-                cout << "Arbol post-order:" << endl;
-                mostrarPostOrden();
-                cout << "Arbol pre-order:" << endl;
-                mostrarPreOrden();
+                if (existeArbol) {
+                    cout << "El arbol final es: " << endl;
+                    cout << "Arbol in-order:" << endl;
+                    mostrarInOrden();
+                    cout << "Arbol post-order:" << endl;
+                    mostrarPostOrden();
+                    cout << "Arbol pre-order:" << endl;
+                    mostrarPreOrden();
+                }
+                else {
+                    cout << "Primero debe crear un arbol binario" << endl;
+                    system("pause");
+                    system("cls");
+                }
                 break;
             case 3:
-                opcion = 3;
+                select = 3;
                 break;
             default:
                 cout << "Ingrese una opcion valida" << endl;
@@ -365,6 +442,8 @@ private:
 
     // Se crea un puntero a la raiz del arbol
     Nodo<T>* raiz;
+    bool existeArbol = false;
+    int eliminarArbol = 0;
 
     // Funcion para obtener altura del arbol
     int obtenerAltura(Nodo<T>* nodo) {
@@ -524,58 +603,86 @@ public:
 
     // Funcion menu del arbol AVL
     void menuArbolAVL() {
-        int selector = 0, cantidad = 0, dato = 0;
-        while (selector != 3) {
+        int select = 0, cantidad = 0, dato = 0;
+        while (select != 3) {
             cout << "1. Crear un arbol e ingresar nodos" << endl;
             cout << "2. Mostrar el arbol" << endl;
             cout << "3. Volver al menu principal" << endl;
-            cin >> selector;
+            cin >> select;
 
             // Manejo de errores select
-            while (cin.fail())
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
-                cout << "Ingrese una opcion valida: ";
-                cin >> selector;
-            }
+        while (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+            cout << "Ingrese una opcion valida: ";
+            cin >> select;
+        }
 
-            switch (selector) {
+            switch (select) {
             case 1:
-            {
-                cout << "Ingrese cuantos nodos desea insertar: " << endl;
-                cin >> cantidad;
-                for (int i = 0; i < cantidad; i++) {
-                    cout << "Ingrese nodo " << i + 1 << endl;
-                    cin >> dato;
-                    insertar(dato);
+                if (!existeArbol) {
+                    cout << "Ingrese cuantos nodos desea insertar: " << endl;
+                    cin >> cantidad;
+                    for (int i = 0; i < cantidad; i++) {
+                        cout << "Ingrese nodo " << i + 1 << endl;
+                        cin >> dato;
+                        insertar(dato);
+                    }
+                    existeArbol = true;
                 }
-            }
+                else {
+                    // Logica de eliminar arbol, si existe un arbol ya creado
+                    cout << "Ya se ha creado un AVL. " << endl;
+                    cout << ". Ingrese 1 si desea eliminar el arbol existente" << endl;
+                    cout << ". Presione otro numero para continuar..." << endl;
+                    cin >> eliminarArbol;
+
+                    // Verificacion de tipo de dato ingresado
+                    while (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                        cout << "Ingrese un numero: ";
+                        cin >> eliminarArbol;
+                    }
+
+                    // Se elimina el arbol existente si el usuario ingresa 1
+                    if (eliminarArbol == 1) {
+                        delete raiz;
+                        raiz = nullptr;
+                        existeArbol = false;
+                    }
+                    else {
+                        system("cls");
+                    }
+                }
+
             break;
             case 2:
-            {
-                cout << "El arbol final es: " << endl;
-                cout << "Arbol in-order:" << endl;
-                mostrarInOrden();
-                cout << "Arbol post-order:" << endl;
-                mostrarPostOrden();
-                cout << "Arbol pre-order:" << endl;
-                mostrarPreOrden();
-            }
+                if (existeArbol) {
+                    cout << "El arbol final es: " << endl;
+                    cout << "Arbol in-order:" << endl;
+                    mostrarInOrden();
+                    cout << "Arbol post-order:" << endl;
+                    mostrarPostOrden();
+                    cout << "Arbol pre-order:" << endl;
+                    mostrarPreOrden();
+                }
+                else {
+                    cout << "Primero debe crear un AVL" << endl;
+					system("pause");
+					system("cls");
+                }
             break;
             case 3:
-            {
-                selector = 3;
-            }
+                select = 3;
             break;
             default:
                 cout << "Ingrese una opcion valida: " << endl;
                 break;
             }
-
         }
     }
-
 };
 
 enum Color { ROJO, NEGRO };
@@ -596,8 +703,7 @@ public:
 template <typename T>
 class ArbolRojoNegro {
 private:
-    NodoRN<T>* raiz;
-
+   
     // Funcion para hacer rotacion izquierda
     void rotacionIzquierda(NodoRN<T>* x) {
         // Se crea un nuevo nodo y se lo iguala al nodo que esta a la derecha de x
@@ -627,6 +733,9 @@ private:
     void imprimirHelper(NodoRN<T>* nodo, std::string indent, bool ultimo) const;
 
 public:
+
+    NodoRN<T>* raiz;
+
     ArbolRojoNegro() : raiz(nullptr) {}
     void insertar(const T& clave);
     void borrar(const T& clave);
@@ -835,10 +944,10 @@ int main() {
     ArbolBB<int> arbolBB;
     ArbolB<int> arbolB;
     ArbolRojoNegro<int> arbolRN;
-    //ArbolARN<int> arbolRN;
 
     // Variables para menu ARN
-    int selector = 0, cantidad = 0, dato = 0;
+    int selector = 0, cantidad = 0, dato = 0, eliminarArbol = 0;
+    bool existeArbol = false;
 
     // Menu de opciones 
     int select = 0;
@@ -872,6 +981,7 @@ int main() {
             break;
         case 4:
             // Menu de arbol ARN
+            selector = 0;
             while (selector != 3) {
                 cout << "1. Crear un arbol e ingresar nodos" << endl;
                 cout << "2. Mostrar el arbol" << endl;
@@ -889,23 +999,56 @@ int main() {
 
                 switch (selector) {
                 case 1:
-                {
-                    cout << "Ingrese cuantos nodos desea insertar: " << endl;
-                    cin >> cantidad;
-                    for (int i = 0; i < cantidad; i++) {
-                        cout << "Ingrese nodo " << i + 1 << endl;
-                        cin >> dato;
-                        arbolRN.insertar(dato);
+                {   
+                    if (!existeArbol) {
+                        cout << "Ingrese cuantos nodos desea insertar: " << endl;
+                        cin >> cantidad;
+                        for (int i = 0; i < cantidad; i++) {
+                            cout << "Ingrese nodo " << i + 1 << endl;
+                            cin >> dato;
+                            arbolRN.insertar(dato);
+                        }
+                    }
+                    else 
+                    {
+                        // Logica de eliminar arbol, si existe un arbol ya creado
+                        cout << "Ya se ha creado un AVL. " << endl;
+                        cout << ". Ingrese 1 si desea eliminar el arbol existente" << endl;
+                        cout << ". Presione otro numero para continuar..." << endl;
+                        cin >> eliminarArbol;
+
+                        // Verificacion de tipo de dato ingresado
+                        while (cin.fail()) {
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                            cout << "Ingrese un numero: ";
+                            cin >> eliminarArbol;
+                        }
+
+                        // Se elimina el arbol existente si el usuario ingresa 1
+                        if (eliminarArbol == 1) {
+                            delete arbolRN.raiz;
+                            arbolRN.raiz = nullptr;
+                            existeArbol = false;
+                        }
+                        else {
+                            system("cls");
+                        }
                     }
                 }
                 break;
                 case 2:
-                {
-                    cout << "El arbol final es: " << endl;
-                    arbolRN.imprimir();
-                    cout << endl << "In-Order: " << endl;
-                    arbolRN.inOrden();
-                }
+                    if (existeArbol) {
+                        cout << "El arbol final es: " << endl;
+                        arbolRN.imprimir();
+                        cout << endl << "In-Order: " << endl;
+                        arbolRN.inOrden();
+                    }
+                    else {
+                        cout << "Primero debe crear un ARN" << endl;
+                        system("pause");
+                        system("cls");
+                    }
                 break;
                 case 3:
                     break;
