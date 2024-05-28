@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 
@@ -138,11 +139,24 @@ public:
         cout << "Ingrese cuantos nodos desea insertar: ";
         cin >> cantidadNodos;
 
+        while (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+            cout << "Ingrese una opcion valida: ";
+            cin >> cantidadNodos;
+        }
+
         T* vectorDatos = new T[cantidadNodos];
 
         for (int i = 0; i < cantidadNodos; i++) {
             cout << "Ingrese nodo " << i + 1 << endl;
             cin >> vectorDatos[i];
+            while (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                cout << "Ingrese una opcion valida: ";
+                cin >> vectorDatos[i];
+            }
         }
 
         // Declaracion de cola para insertar nodos que aun no tienen hijos
@@ -252,7 +266,7 @@ public:
             case 3:
                 return;
             default:
-                cout << "Ingrese una opcion valida" << endl;
+                cout << "Ingrese una opcion valida: ";
                 system("pause");
                 system("cls");
                 break;
@@ -351,7 +365,7 @@ public:
 
     void menuBB()
     {
-        int select = 0, cantidad = 0;
+        int select = 0, cantidadNodos = 0;
         while (select != 3)
         {
             cout << "1. Crear un arbol binario de busqueda e ingresar nodos" << endl;
@@ -371,10 +385,24 @@ public:
             case 1:
                 if (!existeArbol) {
                     cout << "Ingrese cuantos nodos desea insertar: ";
-                    cin >> cantidad;
-                    for (int i = 0; i < cantidad; i++) {
+                    cin >> cantidadNodos;
+
+                    while (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                        cout << "Ingrese una opcion valida: ";
+                        cin >> cantidadNodos;
+                    }
+
+                    for (int i = 0; i < cantidadNodos; i++) {
                         cout << "Ingrese nodo " << i + 1 << endl;
                         cin >> numero;
+                        while (cin.fail()) {
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                            cout << "Ingrese una opcion valida: ";
+                            cin >> numero;
+                        }
                         insert(numero);
                     }
                     existeArbol = true;
@@ -603,7 +631,7 @@ public:
 
     // Funcion menu del arbol AVL
     void menuArbolAVL() {
-        int select = 0, cantidad = 0, dato = 0;
+        int select = 0, cantidadNodos = 0, dato = 0;
         while (select != 3) {
             cout << "1. Crear un arbol e ingresar nodos" << endl;
             cout << "2. Mostrar el arbol" << endl;
@@ -623,10 +651,24 @@ public:
             case 1:
                 if (!existeArbol) {
                     cout << "Ingrese cuantos nodos desea insertar: " << endl;
-                    cin >> cantidad;
-                    for (int i = 0; i < cantidad; i++) {
+                    cin >> cantidadNodos;
+
+                    while (cin.fail()) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                        cout << "Ingrese una opcion valida: ";
+                        cin >> cantidadNodos;
+                    }
+
+                    for (int i = 0; i < cantidadNodos; i++) {
                         cout << "Ingrese nodo " << i + 1 << endl;
                         cin >> dato;
+                        while (cin.fail()) {
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                            cout << "Ingrese una opcion valida: ";
+                            cin >> dato;
+                        }
                         insertar(dato);
                     }
                     existeArbol = true;
@@ -734,6 +776,7 @@ private:
 
 public:
 
+    bool existeArbol = false;
     NodoRN<T>* raiz;
 
     ArbolRojoNegro() : raiz(nullptr) {}
@@ -940,14 +983,48 @@ void ArbolRojoNegro<T>::imprimirHelper(NodoRN<T>* nodo, string indent, bool ulti
 }
 
 int main() {
+    /*
+    int typeSelector = 0;
+
+    while (true)
+    {
+        cout << "Ingrese el tipo de dato con el que va a trabajar: " << endl;
+        cout << "1. Int" << endl;
+        cout << "2. Float" << endl;
+        cout << "3. String" << endl;
+        cin >> typeSelector;
+
+        if (typeSelector == 1) {
+            ArbolAVL<int> arbolVL;
+            ArbolBB<int> arbolBB;
+            ArbolB<int> arbolB;
+            ArbolRojoNegro<int> arbolRN;
+        }
+        else if (typeSelector == 2) {
+            ArbolAVL<float> arbolVL;
+            ArbolBB<float> arbolBB;
+            ArbolB<float> arbolB;
+            ArbolRojoNegro<float> arbolRN;
+        }
+        else if (typeSelector == 3) {
+            ArbolAVL<string> arbolVL;
+            ArbolBB<string> arbolBB;
+            ArbolB<string> arbolB;
+            ArbolRojoNegro<string> arbolRN;
+        }
+        else {
+            cout << "Ingrese una opcion valida" << endl;
+        }
+    } 
+     */
+
     ArbolAVL<int> arbolVL;
     ArbolBB<int> arbolBB;
     ArbolB<int> arbolB;
     ArbolRojoNegro<int> arbolRN;
 
     // Variables para menu ARN
-    int selector = 0, cantidad = 0, dato = 0, eliminarArbol = 0;
-    bool existeArbol = false;
+    int selector = 0, cantidadNodos = 0, dato = 0, eliminarArbol = 0;
 
     // Menu de opciones 
     int select = 0;
@@ -1000,14 +1077,29 @@ int main() {
                 switch (selector) {
                 case 1:
                 {   
-                    if (!existeArbol) {
+                    if (!arbolRN.existeArbol) {
                         cout << "Ingrese cuantos nodos desea insertar: " << endl;
-                        cin >> cantidad;
-                        for (int i = 0; i < cantidad; i++) {
+                        cin >> cantidadNodos;
+
+                        while (cin.fail()) {
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                            cout << "Ingrese una opcion valida: ";
+                            cin >> cantidadNodos;
+                        }
+
+                        for (int i = 0; i < cantidadNodos; i++) {
                             cout << "Ingrese nodo " << i + 1 << endl;
                             cin >> dato;
+                            while (cin.fail()) {
+                                cin.clear();
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Se ignora toda la entrada anterior hasta encontrar un salto de linea  
+                                cout << "Ingrese una opcion valida: ";
+                                cin >> dato;
+                            }
                             arbolRN.insertar(dato);
                         }
+                        arbolRN.existeArbol = true;
                     }
                     else 
                     {
@@ -1029,7 +1121,7 @@ int main() {
                         if (eliminarArbol == 1) {
                             delete arbolRN.raiz;
                             arbolRN.raiz = nullptr;
-                            existeArbol = false;
+                            arbolRN.existeArbol = false;
                         }
                         else {
                             system("cls");
@@ -1038,7 +1130,7 @@ int main() {
                 }
                 break;
                 case 2:
-                    if (existeArbol) {
+                    if (arbolRN.existeArbol) {
                         cout << "El arbol final es: " << endl;
                         arbolRN.imprimir();
                         cout << endl << "In-Order: " << endl;
@@ -1070,6 +1162,7 @@ int main() {
 
         system("pause");
         system("cls");
+
     }
     return 0;
 }
